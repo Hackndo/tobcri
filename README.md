@@ -1,2 +1,2 @@
 # tobcri
-tobcri is an IRC bot based on Sopel that supports SSL, multi channels, and provides different modules and commands
+tobcri is an IRC bot that supports SSL, multi channels, and provides different modules and commands
