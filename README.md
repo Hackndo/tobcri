@@ -5,24 +5,20 @@ tobcri is an IRC bot based on Sopel that supports SSL, multi channels, and provi
 ### Version
 0.1
 
-### Tech
-
-* [Sopel](https://github.com/sopel-irc/sopel)
-
 ### Requirements
 
 See `requirements.txt` file
 
 ### Installation
 
-```python
+```sh
 mkvirtualenv tobcri -p $(which python3)
 python setup.py
 ```
 
 ### Test
 
-```
+```sh
 tox
 ```
 
