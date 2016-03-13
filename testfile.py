@@ -4,7 +4,7 @@
 import tobcri
 
 
-i = tobcri.IRC_Client(host="irc.worldnet.net",
+i = tobcri.Tobcri(host="irc.worldnet.net",
                port=7000,
                nick="Hackndo",
                identity="hackndo",

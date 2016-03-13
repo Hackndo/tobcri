@@ -21,11 +21,10 @@ class IRC:
         """
         if ssl:
             s = self._socket = socket.socket(socket.AF_INET,
-                                            socket.SOCK_STREAM)
+                                             socket.SOCK_STREAM)
             self._socket = ssl.wrap_socket(s)
         else:
-            self._socket = self._socket = socket.socket(socket.AF_INET,
-                                                  socket.SOCK_STREAM)
+            self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._channel_pool = channel_pool
         self._is_connected = False
         self._log = Log()
