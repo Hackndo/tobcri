@@ -22,7 +22,7 @@ class Tobcri:
     }
 
     def __init__(self, host, port, nick, identity, real_name, channel_pool,
-                 use_ssl=False, admins=[]):
+                 use_ssl=False, admins=None):
         self._irc = IRC(host, port, nick, identity, real_name, channel_pool,
                         use_ssl)
         self._is_connected = False
@@ -98,5 +98,3 @@ class Tobcri:
     @staticmethod
     def is_channel(string):
         return string and string[0] in b"#&+!"
-
-
