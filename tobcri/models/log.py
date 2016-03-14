@@ -12,8 +12,8 @@ class Log:
         self.message = ""
         self.date = ""
 
-    def log(self, author, channel, message):
-        line = b'[%s] [%s] %s : %s\n' % (b"now",
+    def log(self, server, author, channel, message):
+        line = b'[%s] [%s] %s : %s\n' % (server,
                                          channel,
                                          author,
                                          message)
