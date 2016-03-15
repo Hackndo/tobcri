@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import sys
-import time
+
 
 class Log:
 
@@ -17,4 +16,4 @@ class Log:
                                          channel,
                                          author,
                                          message)
-        sys.stdout.write(line.decode('latin-1'))
+        sys.stdout.write(line.decode())

@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
 
-import socket, ssl, time
-
+import socket
+import ssl
 from tobcri.settings import settings
-from .log import Log
-from .event import Event
+from tobcri.models.log import Log
+from tobcri.models.event import Event
 
 
 class IRC:
@@ -41,8 +40,6 @@ class IRC:
         self._send_user()
         return True
 
-
-
     def _process_input(self, process=True):
         """
         Process any input from the server
@@ -64,24 +61,25 @@ class IRC:
         Parse any given input to create an event
         :return: Event
         """
-        if cmd[0] == b'PING':
+        if cmd[0] == b"PING":
             return Event(event_type=cmd[0].lower(),
-                         source = b'',
-                         target=b'',
+                         source=b"",
+                         target=b"",
                          arguments=[cmd[1]])
-        elif len(cmd) > 2 and chr(cmd[0][0]) == ':':
-            source = cmd[0][1:].split(b'!')[0]
+        elif len(cmd) > 2 and chr(cmd[0][0]) == ":":
+            source = cmd[0][1:].split(b"!")[0]
 
             action = cmd[1]
-            if cmd[1].decode(settings.BOT_ENCODING).isnumeric():
+            if cmd[1].decode().isnumeric():
                 destination = []
                 arguments = cmd[2:]
             else:
                 destination = cmd[2]
                 arguments = cmd[3:]
 
-            if action in settings.SERVER_AVAILABLE_COMMANDS or \
-               action in settings.SERVER_VALID_RETURN_CODES:
+            if (action in settings.SERVER_AVAILABLE_COMMANDS or
+                action in settings.SERVER_VALID_RETURN_CODES):
+                # If action is valid
                 return Event(event_type=action.lower(),
                              source=source,
                              target=destination,
