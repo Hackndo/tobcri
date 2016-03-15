@@ -39,23 +39,9 @@ class IRC:
         self._connect_server()
         self._send_nick()
         self._send_user()
-        self._initialization()
         return True
 
-    def _initialization(self):
-        """
-        Waiting for the first PING to join channel pool
-        No other queries should be processed
-        """
 
-        while not self._pong_initialized:
-            self._process_input(process=False)
-
-        """
-        Once PONG sent, join all channels
-        """
-        for channel in self._channel_pool:
-            self._join_channel(channel)
 
     def _process_input(self, process=True):
         """
@@ -68,11 +54,8 @@ class IRC:
 
         for line in temp:
             line = line.rstrip().split()
-            event = self._parse_command(line)
-            if event and event.get_event_type() == b"PING".lower():
-                self._send_pong(event.get_arguments()[0])
-            elif process:
-                return event
+            print(line)
+            return self._parse_command(line)
 
         return None
 
@@ -86,12 +69,19 @@ class IRC:
                          source = b'',
                          target=b'',
                          arguments=[cmd[1]])
-        if len(cmd) >= 3:
+        elif len(cmd) > 2 and chr(cmd[0][0]) == ':':
             source = cmd[0][1:].split(b'!')[0]
+
             action = cmd[1]
-            destination = cmd[2]
-            arguments = cmd[3:]
-            if action in settings.BOT_AVAILABLE_COMMANDS:
+            if cmd[1].decode(settings.BOT_ENCODING).isnumeric():
+                destination = []
+                arguments = cmd[2:]
+            else:
+                destination = cmd[2]
+                arguments = cmd[3:]
+
+            if action in settings.SERVER_AVAILABLE_COMMANDS or \
+               action in settings.SERVER_VALID_RETURN_CODES:
                 return Event(event_type=action.lower(),
                              source=source,
                              target=destination,

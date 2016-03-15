@@ -41,15 +41,25 @@ class Tobcri:
         Main loop awaiting for events
         """
         while self._is_connected:
-            e = self._irc._process_input(process=True)
+            e = self._irc._process_input()
             if e is not None:
                 self._process_event(e)
         self._irc._close_connection()
 
     def _process_event(self, e):
-        m = (b"on_" + e._event_type).decode(settings.BOT_ENCODING)
-        if hasattr(self, m):
-            getattr(self, m)(e)
+        e_type = e.get_event_type()
+        if e_type == b'PING'.lower():
+            self._irc._send_pong(e.get_arguments()[0])
+        elif e_type == b'001': # Success
+            for channel in self._irc._channel_pool:
+                self._irc._join_channel(channel)
+        elif e_type == b'433': # Success
+            self._irc._nick += b'_'
+            self._irc._send_nick()
+        else:
+            m = (b"on_" + e_type).decode(settings.BOT_ENCODING)
+            if hasattr(self, m):
+                getattr(self, m)(e)
 
     def on_privmsg(self, e):
         source = e.get_source()

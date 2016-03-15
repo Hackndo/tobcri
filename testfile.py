@@ -9,29 +9,25 @@ i = tobcri.Tobcri(host="irc.worldnet.net",
                 nick="Hackndo",
                 identity="hackndo",
                 real_name="Hackn'n'Do",
-                channel_pool=[
-                    b"#hackndo",
-                    b"#0x90r00t",
-                    b"#hackndo2"],
+                channel_pool=[b'#hackndo'],
                 use_ssl=True,
                 admins=[
-                    b"Pixis",]
-                )
+                    b"Pixis",
+                ])
 
-j = tobcri.Tobcri(host="irc.hackerzvoice.net",
+j = tobcri.Tobcri(host="irc.freenode.net",
                port=6667,
                nick="Hackndo",
                identity="hackndo",
                real_name="Hackn'n'Do",
-               channel_pool=[
-                   b"#0x90r00t",
-                   b"#hackndo2"],
-               use_ssl=False)
+               channel_pool=[b'#hackndo'],
+               use_ssl=False,
+               admins=[
+                   b'Pixis',
+               ])
 
-i.connect()
-exit()
 t1 = threading.Thread(target=i.connect, args=())
-t2 = threading.Thread(target=j.connect, args=())
+#t2 = threading.Thread(target=j.connect, args=())
 
 t1.start()
-t2.start()
+#t2.start()
