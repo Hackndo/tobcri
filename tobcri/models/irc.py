@@ -78,7 +78,7 @@ class IRC:
                 arguments = cmd[3:]
 
             if (action in settings.SERVER_AVAILABLE_COMMANDS or
-                action in settings.SERVER_VALID_RETURN_CODES):
+                    action in settings.SERVER_VALID_RETURN_CODES):
                 # If action is valid
                 return Event(event_type=action.lower(),
                              source=source,
