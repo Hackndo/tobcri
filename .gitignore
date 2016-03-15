@@ -45,6 +45,7 @@ coverage.xml
 
 # Translations
 *.mo
+/tobcri/settings/local_settings.py
 *.pot
 
 # Sphinx documentation

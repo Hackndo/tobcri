@@ -10,8 +10,11 @@ i = tobcri.Tobcri(
     nick="Hackndo",
     identity="hackndo",
     real_name="Hackn'n'Do",
-    channel_pool=[b"#hackndo"],
+    channel_pool=[b"#hackndo",
+                  b"#0x90r00t"
+                  ],
     use_ssl=True,
+    ns_password=True,
     admins=[
         b"Pixis",
     ]
@@ -29,9 +32,10 @@ j = tobcri.Tobcri(
        b"Pixis",
     ]
 )
-
-t1 = threading.Thread(target=i.connect, args=())
+i.connect()
+# t1 = threading.Thread(target=i.connect, args=())
 # t2 = threading.Thread(target=j.connect, args=())
 
-t1.start()
+# t1.start()
 # t2.start()
+

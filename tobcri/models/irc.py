@@ -9,7 +9,7 @@ from tobcri.models.event import Event
 
 class IRC:
     def __init__(self, host, port, nick, identity, real_name, channel_pool,
-                 use_ssl=False):
+                 use_ssl=False, ns_password=False):
         self._host = bytes(host, settings.BOT_ENCODING)
         self._port = port
         self._nick = bytes(nick, settings.BOT_ENCODING)
@@ -18,18 +18,13 @@ class IRC:
         """
         SSL Support
         """
-        if use_ssl:
-            s = self._socket = socket.socket(socket.AF_INET,
-                                             socket.SOCK_STREAM)
-            self._socket = ssl.wrap_socket(s)
-        else:
-            self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self._socket.setblocking(False)
+        self._init_socket(use_ssl=use_ssl)
 
         self._channel_pool = channel_pool
         self._is_connected = False
         self._log = Log()
         self._pong_initialized = False
+        self._ns_password = ns_password
 
     def connect(self):
         """
@@ -37,8 +32,19 @@ class IRC:
         """
         self._connect_server()
         self._send_nick()
+        if self._ns_password:
+            self._send_password()
         self._send_user()
         return True
+
+    def _init_socket(self, use_ssl=False):
+        if use_ssl:
+            s = self._socket = socket.socket(socket.AF_INET,
+                                             socket.SOCK_STREAM)
+            self._socket = ssl.wrap_socket(s)
+        else:
+            self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
     def _process_input(self, process=True):
         """
@@ -97,6 +103,12 @@ class IRC:
         Send NICK to server
         """
         self._send_raw_command(b"NICK %s" % self._nick)
+
+    def _send_password(self):
+        """
+        Send NICK to server
+        """
+        self._send_privmsg(b"nickserv", b"IDENTIFY %s" % settings.BOT_PASSWORD)
 
     def _send_user(self):
         """

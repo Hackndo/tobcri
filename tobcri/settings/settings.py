@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 
-DEBUG = True
+from tobcri.settings.local_settings import PASSWORD
 
-BOT = None
-BOT_NICKNAME = ""
-BOT_PASSWORD = ""
+DEBUG = True
+BOT_PASSWORD = PASSWORD
 BOT_CHANNELS = []
-BOT_IRC_SERVER = ""
-BOT_IRC_PORT = 6667
-BOT_IRC_SSL_PORT = 6697
 BOT_ENCODING = "utf-8"
 
 SERVER_VALID_RETURN_CODES = (

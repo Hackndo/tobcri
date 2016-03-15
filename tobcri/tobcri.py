@@ -21,9 +21,9 @@ class Tobcri:
     }
 
     def __init__(self, host, port, nick, identity, real_name, channel_pool,
-                 use_ssl=False, admins=None):
+                 use_ssl=False, ns_password=False, admins=None):
         self._irc = IRC(host, port, nick, identity, real_name, channel_pool,
-                        use_ssl)
+                        use_ssl, ns_password)
         self._is_connected = False
         self._admins = admins
 
